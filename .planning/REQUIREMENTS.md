@@ -90,48 +90,48 @@
 
 ## Traceability
 
-*Populated during roadmap creation.*
+*Populated during roadmap creation — 2026-05-20.*
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SPEC-01 | — | Pending |
-| SPEC-02 | — | Pending |
-| SPEC-03 | — | Pending |
-| SPEC-04 | — | Pending |
-| SPEC-05 | — | Pending |
-| PLAN-01 | — | Pending |
-| PLAN-02 | — | Pending |
-| PLAN-03 | — | Pending |
-| PLAN-04 | — | Pending |
-| PLAN-05 | — | Pending |
-| EXEC-01 | — | Pending |
-| EXEC-02 | — | Pending |
-| EXEC-03 | — | Pending |
-| EXEC-04 | — | Pending |
-| EXEC-05 | — | Pending |
-| HEAL-01 | — | Pending |
-| HEAL-02 | — | Pending |
-| HEAL-03 | — | Pending |
-| HEAL-04 | — | Pending |
-| TOOL-01 | — | Pending |
-| TOOL-02 | — | Pending |
-| TOOL-03 | — | Pending |
-| TOOL-04 | — | Pending |
-| TOOL-05 | — | Pending |
-| REPL-01 | — | Pending |
-| REPL-02 | — | Pending |
-| REPL-03 | — | Pending |
-| REPL-04 | — | Pending |
-| REPL-05 | — | Pending |
-| REPL-06 | — | Pending |
-| PROJ-01 | — | Pending |
-| PROJ-02 | — | Pending |
-| PROJ-03 | — | Pending |
+| TOOL-01 | Phase 1 | Pending |
+| TOOL-02 | Phase 1 | Pending |
+| TOOL-04 | Phase 1 | Pending |
+| TOOL-05 | Phase 1 | Pending |
+| SPEC-01 | Phase 2 | Pending |
+| SPEC-02 | Phase 2 | Pending |
+| SPEC-03 | Phase 2 | Pending |
+| SPEC-04 | Phase 2 | Pending |
+| SPEC-05 | Phase 2 | Pending |
+| PROJ-01 | Phase 2 | Pending |
+| PROJ-02 | Phase 3 | Pending |
+| PROJ-03 | Phase 3 | Pending |
+| PLAN-01 | Phase 4 | Pending |
+| PLAN-02 | Phase 4 | Pending |
+| PLAN-03 | Phase 4 | Pending |
+| PLAN-04 | Phase 4 | Pending |
+| PLAN-05 | Phase 4 | Pending |
+| EXEC-01 | Phase 5 | Pending |
+| EXEC-02 | Phase 5 | Pending |
+| EXEC-03 | Phase 5 | Pending |
+| EXEC-04 | Phase 5 | Pending |
+| EXEC-05 | Phase 5 | Pending |
+| TOOL-03 | Phase 5 | Pending |
+| HEAL-01 | Phase 6 | Pending |
+| HEAL-02 | Phase 6 | Pending |
+| HEAL-03 | Phase 6 | Pending |
+| HEAL-04 | Phase 6 | Pending |
+| REPL-01 | Phase 7 | Pending |
+| REPL-02 | Phase 7 | Pending |
+| REPL-03 | Phase 7 | Pending |
+| REPL-04 | Phase 8 | Pending |
+| REPL-05 | Phase 8 | Pending |
+| REPL-06 | Phase 8 | Pending |
 
 **Coverage:**
 - v1 requirements: 33 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 33 ⚠️
+- Mapped to phases: 33 ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-05-20*
