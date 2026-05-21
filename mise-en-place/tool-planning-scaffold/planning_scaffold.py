@@ -41,7 +41,7 @@ def read_artifact(planning_root: pathlib.Path, artifact: str) -> str:
 def write_artifact(planning_root: pathlib.Path, artifact: str, content: str) -> None:
     candidate = (planning_root / artifact).resolve()
     resolved_root = planning_root.resolve()
-    if candidate != resolved_root and resolved_root not in candidate.parents:
+    if resolved_root not in candidate.parents:
         print(f"ERROR: artifact path {artifact!r} escapes .planning/ root")
         sys.exit(1)
     candidate.parent.mkdir(parents=True, exist_ok=True)
