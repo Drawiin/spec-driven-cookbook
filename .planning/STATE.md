@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 1 context gathered — 4 gray areas discussed (language, skill structure, context-builder output, invocation). Ready to plan.
-last_updated: "2026-05-21T17:57:57.164Z"
-last_activity: 2026-05-21 -- Phase 1 planning complete
+stopped_at: Phase 1 Plan 01 complete — tool-env-check walking skeleton delivered (SKILL.md + env_check.py + 4 tests passing)
+last_updated: "2026-05-21T19:55:00Z"
+last_activity: 2026-05-21 -- Phase 1 Plan 01 executed
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 3
-  completed_plans: 0
-  percent: 0
+  completed_plans: 1
+  percent: 4
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: .planning/PROJECT.md (updated 2026-05-20)
 ## Current Position
 
 Phase: 1 of 8 (Tooling Foundation)
-Plan: 0 of TBD in current phase
-Status: Ready to execute
-Last activity: 2026-05-21 -- Phase 1 planning complete
+Plan: 1 of 3 complete in current phase
+Status: Executing — Wave 2 ready (01-02, 01-03 unblocked)
+Last activity: 2026-05-21 -- Phase 1 Plan 01 executed
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 4%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: 0 hours
+- Total plans completed: 1
+- Average duration: ~15 minutes
+- Total execution time: ~0.25 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 1. Tooling Foundation | 1 | ~15 min | ~15 min |
 
 **Recent Trend:**
 
-- Last 5 plans: —
-- Trend: —
+- Last 5 plans: 01-01
+- Trend: On track
 
 *Updated after each plan completion*
 
@@ -64,6 +64,8 @@ Recent decisions affecting current work:
 - Initialization: Single coding template for v1 — validate replication engine before more templates
 - Initialization: All tooling bundled inside skill folder — keeps generated variants self-contained
 - Initialization: File-based state over databases — version-control friendly, no infrastructure
+- 01-01: CURSOR_TRACE_ID env-var fast-path for cursor detection — avoids subprocess inside IDE (D-09 discretion)
+- 01-01: bun/node handled as special case — try bun first, fallback to node if absent
 
 ### Pending Todos
 
@@ -84,5 +86,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-05-21
-Stopped at: Phase 1 context gathered — 4 gray areas discussed (language, skill structure, context-builder output, invocation). Ready to plan.
-Resume file: .planning/phases/01-tooling-foundation/01-CONTEXT.md
+Stopped at: Phase 1 Plan 01 complete — tool-env-check walking skeleton delivered (SKILL.md + env_check.py + 4 tests passing)
+Resume file: .planning/phases/01-tooling-foundation/01-02-PLAN.md

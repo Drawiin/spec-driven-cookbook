@@ -42,7 +42,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 **Wave 1**
 
-- [ ] 01-01-PLAN.md — Walking Skeleton: mise-en-place/ scaffold + tool-env-check (SKILL.md + env_check.py + tests)
+- [x] 01-01-PLAN.md — Walking Skeleton: mise-en-place/ scaffold + tool-env-check (SKILL.md + env_check.py + tests)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -165,7 +165,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Tooling Foundation | 0/3 | Not started | - |
+| 1. Tooling Foundation | 1/3 | In progress | - |
 | 2. Spec Phase — Greenfield | 0/TBD | Not started | - |
 | 3. Brownfield Codebase Onboarding | 0/TBD | Not started | - |
 | 4. Plan Phase | 0/TBD | Not started | - |
