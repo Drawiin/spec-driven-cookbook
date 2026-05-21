@@ -1,4 +1,5 @@
 """Tests for env_check.py"""
+import os
 import shutil
 import subprocess
 import sys
@@ -23,7 +24,6 @@ def test_exits_zero_when_all_checks_pass():
          patch("env_check.subprocess.run", return_value=mock_result), \
          patch.dict("os.environ", {}, clear=False):
         # Remove CURSOR_TRACE_ID if present so cursor check uses subprocess path
-        import os
         env_backup = os.environ.pop("CURSOR_TRACE_ID", None)
         try:
             with pytest.raises(SystemExit) as exc_info:
