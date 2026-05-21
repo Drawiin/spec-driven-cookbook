@@ -49,13 +49,13 @@ def test_planning_dir_excluded_from_tree(tmp_project):
 
 
 def test_gitignore_patterns_applied(tmp_project):
-    """Directories matching gitignore patterns are excluded from build_tree output (D-06)."""
-    (tmp_project / "node_modules").mkdir()
-    (tmp_project / ".gitignore").write_text("node_modules/\n", encoding="utf-8")
+    """Directories matching gitignore patterns (but not ALWAYS_EXCLUDE) are excluded."""
+    (tmp_project / "vendor").mkdir()  # 'vendor' is not in ALWAYS_EXCLUDE
+    (tmp_project / ".gitignore").write_text("vendor/\n", encoding="utf-8")
     patterns = load_gitignore_patterns(tmp_project)
     tree = build_tree(tmp_project, patterns, depth=3)
     joined = "\n".join(tree)
-    assert "node_modules" not in joined
+    assert "vendor" not in joined
 
 
 def test_missing_gitignore_graceful(tmp_project):

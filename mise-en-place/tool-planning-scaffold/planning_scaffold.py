@@ -57,10 +57,11 @@ def format_file(path: pathlib.Path) -> None:
 
 
 def _validate_root(raw_root: str) -> pathlib.Path:
-    """Resolve root to an absolute path. Rejects traversal tricks (e.g. ../../etc)."""
+    """Resolve root and reject paths outside the working directory."""
     root = pathlib.Path(raw_root).resolve()
-    if not root.is_absolute():
-        print(f"ERROR: --root {raw_root!r} did not resolve to an absolute path")
+    cwd = pathlib.Path.cwd().resolve()
+    if not (root == cwd or cwd in root.parents or root in cwd.parents):
+        print(f"ERROR: --root {raw_root!r} is outside working directory {cwd}")
         sys.exit(1)
     return root
 

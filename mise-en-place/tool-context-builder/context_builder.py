@@ -23,7 +23,10 @@ def load_gitignore_patterns(root: pathlib.Path) -> list:
     gi = root / ".gitignore"
     if not gi.exists():
         return []
-    lines = gi.read_text(encoding="utf-8").splitlines()
+    try:
+        lines = gi.read_text(encoding="utf-8").splitlines()
+    except (UnicodeDecodeError, OSError):
+        return []
     return [line.strip() for line in lines if line.strip() and not line.startswith("#")]
 
 
@@ -53,15 +56,18 @@ def build_tree(root: pathlib.Path, patterns: list, depth: int = 3, prefix: str =
 
 def git_summary(root: str) -> str:
     def run(args):
-        r = subprocess.run(
-            ["git", "--no-pager"] + args,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            timeout=10,
-            cwd=root,
-        )
-        return r.stdout.strip() if r.returncode == 0 else ""
+        try:
+            r = subprocess.run(
+                ["git", "--no-pager"] + args,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                timeout=10,
+                cwd=root,
+            )
+            return r.stdout.strip() if r.returncode == 0 else ""
+        except subprocess.TimeoutExpired:
+            return ""
 
     branch = run(["rev-parse", "--abbrev-ref", "HEAD"])
     if not branch:
@@ -109,6 +115,9 @@ def main():
     if not (root == cwd or cwd in root.parents or root in cwd.parents):
         print(f"ERROR: --root {root} is outside working directory {cwd}")
         sys.exit(1)
+    if not root.is_dir():
+        print(f"ERROR: --root {root} does not exist or is not a directory")
+        sys.exit(1)
 
     patterns = load_gitignore_patterns(root)
 
@@ -129,9 +138,9 @@ def main():
             try:
                 dep_content = dep_path.read_text(encoding="utf-8")
                 dep_name = dep_file
+                break
             except (UnicodeDecodeError, OSError):
                 pass
-            break
     if dep_content is not None:
         sections.append(f"## Dependencies\n\n### `{dep_name}`\n```\n{dep_content}\n```")
     else:

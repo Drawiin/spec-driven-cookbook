@@ -32,7 +32,10 @@ def run_check(name: str, cmd: list) -> Tuple[str, str]:
                     text=True,
                     timeout=3,
                 )
-                ver = (r.stdout or r.stderr).splitlines()[0].strip()
+                if r.returncode != 0:
+                    return ("✗", f"cursor: exited {r.returncode}")
+                output = (r.stdout or r.stderr).strip()
+                ver = output.splitlines()[0].strip() if output else "cursor: no output"
                 return ("✓", ver)
             except subprocess.TimeoutExpired:
                 return ("✗", "cursor: timed out")
@@ -50,7 +53,10 @@ def run_check(name: str, cmd: list) -> Tuple[str, str]:
                         text=True,
                         timeout=3,
                     )
-                    ver = (r.stdout or r.stderr).splitlines()[0].strip()
+                    if r.returncode != 0:
+                        return ("✗", f"node: exited {r.returncode}")
+                    output = (r.stdout or r.stderr).strip()
+                    ver = output.splitlines()[0].strip() if output else "node: no output"
                     return ("✓", ver)
                 except subprocess.TimeoutExpired:
                     return ("✗", "node: timed out")
@@ -68,7 +74,10 @@ def run_check(name: str, cmd: list) -> Tuple[str, str]:
             text=True,
             timeout=3,
         )
-        ver = (r.stdout or r.stderr).splitlines()[0].strip()
+        if r.returncode != 0:
+            return ("✗", f"{cmd[0]}: exited {r.returncode}")
+        output = (r.stdout or r.stderr).strip()
+        ver = output.splitlines()[0].strip() if output else f"{cmd[0]}: no output"
         return ("✓", ver)
     except subprocess.TimeoutExpired:
         return ("✗", f"{cmd[0]}: timed out")
