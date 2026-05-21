@@ -33,7 +33,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Running the context-builder outputs a clean markdown file (directory tree, dependency list, git summary) ready to paste into an agent prompt without any manual editing
   3. CLI utilities can scaffold the `.planning/` directory, read/write framework artifacts, and format files idempotently
   4. All tool scripts ship inside the skill folder — moving the skill to a new project includes all utilities without any additional setup
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Walking Skeleton: mise-en-place/ scaffold + tool-env-check (SKILL.md + env_check.py + tests)
+- [ ] 01-02-PLAN.md — tool-context-builder (SKILL.md + context_builder.py + tests)
+- [ ] 01-03-PLAN.md — tool-planning-scaffold (SKILL.md + planning_scaffold.py + tests)
 
 ### Phase 2: Spec Phase — Greenfield
 **Goal**: Developer can spec any new project from scratch by running one command, working through a structured deep-questioning flow, optionally triggering research sub-tasks, and landing an explicitly approved spec file — the entire flow running on a clean context with only local files
@@ -126,7 +131,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Tooling Foundation | 0/TBD | Not started | - |
+| 1. Tooling Foundation | 0/3 | Not started | - |
 | 2. Spec Phase — Greenfield | 0/TBD | Not started | - |
 | 3. Brownfield Codebase Onboarding | 0/TBD | Not started | - |
 | 4. Plan Phase | 0/TBD | Not started | - |
