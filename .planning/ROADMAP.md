@@ -13,7 +13,7 @@ Build a meta-framework that takes a developer — solo, with Claude as the build
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Tooling Foundation** - CLI utilities, context builders, and environment checks bundled inside the skill folder
+- [x] **Phase 1: Tooling Foundation** - CLI utilities, context builders, and environment checks bundled inside the skill folder *(Complete — 2026-05-21)*
 - [ ] **Phase 2: Spec Phase — Greenfield** - Structured deep-questioning flow, research sub-tasks, persisted spec file, and explicit approval gate on a clean context
 - [ ] **Phase 3: Brownfield Codebase Onboarding** - Codebase mapping step that seeds the spec with what already exists vs. what is new
 - [ ] **Phase 4: Plan Phase** - Spec-to-plan decomposition: atomic tasks, parallel plan streams, and explicit approval before execution
@@ -46,8 +46,8 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 01-02-PLAN.md — tool-context-builder (SKILL.md + context_builder.py + tests)
-- [ ] 01-03-PLAN.md — tool-planning-scaffold (SKILL.md + planning_scaffold.py + tests)
+- [x] 01-02-PLAN.md — tool-context-builder (SKILL.md + context_builder.py + tests)
+- [x] 01-03-PLAN.md — tool-planning-scaffold (SKILL.md + planning_scaffold.py + tests)
 
 **Cross-cutting constraints:**
 
