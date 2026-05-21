@@ -545,17 +545,19 @@ def write_json_artifact(planning_root: Path, artifact: str, data: dict) -> None:
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should `tool-planning-scaffold` also include a `format-file` command (TOOL-01 mentions "formatting files idempotently")?**
    - What we know: TOOL-01 says "formatting files, reading/writing framework artifacts, scaffolding directories"
    - What's unclear: "formatting" likely means normalizing markdown (trailing newlines, consistent headers) not linting/prettifying. The success criteria (SC-3) says "format files idempotently" — could be as simple as ensuring a trailing newline.
    - Recommendation: Implement format as "normalize trailing newline + strip trailing whitespace per line" — simple, idempotent, and useful for diff-clean commits. If a more sophisticated formatter is needed, defer to a later phase.
+   - **RESOLVED:** Implement `format-file` subcommand in `planning_scaffold.py` that normalizes trailing newline + strips trailing whitespace per line.
 
 2. **Node/bun check: should both be required, or is either sufficient?**
    - What we know: This machine has `bun` but not `node`. The success criteria says "git, node/python, cursor" — the slash suggests either/or for node/python.
    - What's unclear: Future phases (Phase 5, Phase 8) use `bun gsd-tools.cjs` — so `bun` is the practical runtime here.
    - Recommendation: Check for `bun` OR `node` (accept either). Report which one was found. This aligns with the runtime note in the project.
+   - **RESOLVED:** `tool-env-check` checks for `bun` OR `node` (either satisfies the JavaScript runtime prerequisite). Reports which one was found.
 
 ---
 

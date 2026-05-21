@@ -2,8 +2,8 @@
 phase: 1
 slug: tooling-foundation
 status: draft
-nyquist_compliant: false
-wave_0_complete: false
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-05-21
 ---
 
@@ -19,16 +19,16 @@ created: 2026-05-21
 |----------|-------|
 | **Framework** | pytest 7.x (Wave 0 installs) |
 | **Config file** | none — Wave 0 creates `pytest.ini` |
-| **Quick run command** | `python3 -m pytest tests/ -x -q` |
-| **Full suite command** | `python3 -m pytest tests/ -v` |
+| **Quick run command** | `python3 -m pytest mise-en-place/ -x -q` |
+| **Full suite command** | `python3 -m pytest mise-en-place/ -v` |
 | **Estimated runtime** | ~5 seconds |
 
 ---
 
 ## Sampling Rate
 
-- **After every task commit:** Run `python3 -m pytest tests/ -x -q`
-- **After every plan wave:** Run `python3 -m pytest tests/ -v`
+- **After every task commit:** Run `python3 -m pytest mise-en-place/ -x -q`
+- **After every plan wave:** Run `python3 -m pytest mise-en-place/ -v`
 - **Before `/gsd-verify-work`:** Full suite must be green
 - **Max feedback latency:** 5 seconds
 
@@ -38,10 +38,10 @@ created: 2026-05-21
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 01-env-check | TBD | 1 | TOOL-04 | — | N/A | unit | `python3 -m pytest tests/test_env_check.py -x -q` | ❌ W0 | ⬜ pending |
-| 01-context-builder | TBD | 1 | TOOL-02 | — | N/A | unit | `python3 -m pytest tests/test_context_builder.py -x -q` | ❌ W0 | ⬜ pending |
-| 01-planning-scaffold | TBD | 1 | TOOL-01 | — | N/A | unit | `python3 -m pytest tests/test_planning_scaffold.py -x -q` | ❌ W0 | ⬜ pending |
-| 01-skill-bundling | TBD | 1 | TOOL-05 | — | N/A | smoke | `python3 -c "import pathlib; assert pathlib.Path('mise-en-place/tool-env-check/SKILL.md').exists()"` | ❌ W0 | ⬜ pending |
+| 01-env-check | 01-01 | 1 | TOOL-04 | — | N/A | unit | `python3 -m pytest mise-en-place/tool-env-check/test_env_check.py -x -q` | ❌ W0 | ⬜ pending |
+| 01-context-builder | 01-02 | 2 | TOOL-02 | — | N/A | unit | `python3 -m pytest mise-en-place/tool-context-builder/test_context_builder.py -x -q` | ❌ W0 | ⬜ pending |
+| 01-planning-scaffold | 01-03 | 2 | TOOL-01 | — | N/A | unit | `python3 -m pytest mise-en-place/tool-planning-scaffold/test_planning_scaffold.py -x -q` | ❌ W0 | ⬜ pending |
+| 01-skill-bundling | 01-01 | 1 | TOOL-05 | — | N/A | smoke | `python3 -c "import pathlib; assert pathlib.Path('mise-en-place/tool-env-check/SKILL.md').exists()"` | ❌ W0 | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -49,10 +49,9 @@ created: 2026-05-21
 
 ## Wave 0 Requirements
 
-- [ ] `tests/test_env_check.py` — stubs for TOOL-04 (env check outputs pass/fail for git, python3, cursor)
-- [ ] `tests/test_context_builder.py` — stubs for TOOL-02 (context builder produces valid markdown with required sections)
-- [ ] `tests/test_planning_scaffold.py` — stubs for TOOL-01 (scaffold creates .planning/ idempotently)
-- [ ] `tests/conftest.py` — shared fixtures (temp directories, mock project roots)
+- [ ] `mise-en-place/tool-env-check/test_env_check.py` — stubs for TOOL-04 (env check outputs pass/fail for git, python3, cursor)
+- [ ] `mise-en-place/tool-context-builder/test_context_builder.py` — stubs for TOOL-02 (context builder produces valid markdown with required sections)
+- [ ] `mise-en-place/tool-planning-scaffold/test_planning_scaffold.py` — stubs for TOOL-01 (scaffold creates .planning/ idempotently)
 - [ ] `pip install pytest` — test framework not yet installed
 
 ---
@@ -75,4 +74,4 @@ created: 2026-05-21
 - [ ] Feedback latency < 5s
 - [ ] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-05-21
