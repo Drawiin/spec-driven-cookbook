@@ -9,7 +9,6 @@ import fnmatch
 import pathlib
 import subprocess
 import sys
-import textwrap
 
 ALWAYS_EXCLUDE = {".planning", ".git", "__pycache__", ".DS_Store", "node_modules"}
 ENTRY_POINT_CANDIDATES = [
