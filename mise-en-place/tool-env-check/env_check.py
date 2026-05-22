@@ -37,8 +37,8 @@ def run_check(name: str, cmd: list) -> Tuple[str, str]:
                 output = (r.stdout or r.stderr).strip()
                 ver = output.splitlines()[0].strip() if output else "cursor: no output"
                 return ("✓", ver)
-            except subprocess.TimeoutExpired:
-                return ("✗", "cursor: timed out")
+            except (subprocess.TimeoutExpired, OSError):
+                return ("✗", "cursor: failed to execute")
         return ("✗", "cursor: not found in PATH")
 
     # bun/node: try bun first, fall back to node
@@ -58,8 +58,8 @@ def run_check(name: str, cmd: list) -> Tuple[str, str]:
                     output = (r.stdout or r.stderr).strip()
                     ver = output.splitlines()[0].strip() if output else "node: no output"
                     return ("✓", ver)
-                except subprocess.TimeoutExpired:
-                    return ("✗", "node: timed out")
+                except (subprocess.TimeoutExpired, OSError):
+                    return ("✗", "node: failed to execute")
             return ("✗", "bun/node: not found in PATH")
 
     # Generic check
@@ -79,8 +79,8 @@ def run_check(name: str, cmd: list) -> Tuple[str, str]:
         output = (r.stdout or r.stderr).strip()
         ver = output.splitlines()[0].strip() if output else f"{cmd[0]}: no output"
         return ("✓", ver)
-    except subprocess.TimeoutExpired:
-        return ("✗", f"{cmd[0]}: timed out")
+    except (subprocess.TimeoutExpired, OSError):
+        return ("✗", f"{cmd[0]}: failed to execute")
 
 
 def main() -> None:
