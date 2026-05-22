@@ -60,7 +60,9 @@ def _validate_root(raw_root: str) -> pathlib.Path:
     """Resolve root and reject paths outside the working directory."""
     root = pathlib.Path(raw_root).resolve()
     cwd = pathlib.Path.cwd().resolve()
-    if not (root == cwd or cwd in root.parents or root in cwd.parents):
+    # Only allow root == cwd or a descendant of cwd (root is under cwd).
+    # Reject ancestor paths (e.g. --root /) to prevent unintended filesystem walks.
+    if not (root == cwd or str(root).startswith(str(cwd) + "/")):
         print(f"ERROR: --root {raw_root!r} is outside working directory {cwd}")
         sys.exit(1)
     return root
