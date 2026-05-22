@@ -32,6 +32,7 @@ def test_output_contains_all_four_sections(tmp_project):
         text=True,
         cwd=str(tmp_project),
     )
+    assert result.returncode == 0, f"Script exited {result.returncode}: {result.stderr}"
     assert "## Directory Tree" in result.stdout
     assert "## Dependencies" in result.stdout
     assert "## Git Summary" in result.stdout
