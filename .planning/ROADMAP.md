@@ -72,11 +72,11 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — tool-validate-spec: validate_spec.py (stdlib-only SPEC.md approval gate) + tests + SKILL.md
+- [ ] 02-01-PLAN.md — tool-validate-spec Python gate: validate_spec.py (stdlib-only) + test_validate_spec.py (5 pytest functions, TDD RED→GREEN)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 02-02-PLAN.md — spec-phase/SKILL.md: complete structured Q&A workflow → SPEC.md assembly → approval gate
+- [ ] 02-02-PLAN.md — SKILL.md contracts: tool-validate-spec/SKILL.md (invocation contract) + spec-phase/SKILL.md (full workflow: startup, Q&A, research, assembly, approval gate)
 
 **Cross-cutting constraints:**
 
