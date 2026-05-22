@@ -67,7 +67,23 @@ Plans:
   4. The spec flow enforces an explicit approval gate — no planning command succeeds unless the spec has been approved by the developer
   5. The entire spec phase can be invoked with no prior session history; it reads only local files and produces only local files
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 02-01-PLAN.md — tool-validate-spec: validate_spec.py (stdlib-only SPEC.md approval gate) + tests + SKILL.md
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 02-02-PLAN.md — spec-phase/SKILL.md: complete structured Q&A workflow → SPEC.md assembly → approval gate
+
+**Cross-cutting constraints:**
+
+- Python stdlib only (no pip installs)
+- Exit-code contract: 0 = approved, 1 = not approved (validate_spec.py)
+- Research files at .planning/research/RESEARCH-<topic-slug>.md (no hardcoded phase paths)
+- All Phase 1 tests remain green
 
 ### Phase 3: Brownfield Codebase Onboarding
 
