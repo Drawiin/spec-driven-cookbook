@@ -32,7 +32,13 @@ def load_gitignore_patterns(root: pathlib.Path) -> list:
 def is_excluded(name: str, patterns: list) -> bool:
     if name in ALWAYS_EXCLUDE:
         return True
-    return any(fnmatch.fnmatch(name, p.lstrip("/").rstrip("/")) for p in patterns)
+    # Skip patterns that contain "/" — these are path-relative and cannot be
+    # matched against a bare name; only simple glob patterns are supported here.
+    return any(
+        fnmatch.fnmatch(name, p.lstrip("/").rstrip("/"))
+        for p in patterns
+        if "/" not in p.strip("/")
+    )
 
 
 def build_tree(root: pathlib.Path, patterns: list, depth: int = 3, prefix: str = "") -> list:
