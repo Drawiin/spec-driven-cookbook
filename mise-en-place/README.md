@@ -16,6 +16,20 @@ Assembles a pasteable markdown context packet from the current project: director
 
 Scaffolds and manages the `.planning/` directory structure. Provides idempotent scaffolding plus `read-artifact`, `write-artifact`, and `format-file` subcommands for planning artifact management.
 
+### tool-validate-spec
+
+Validates that `.planning/SPEC.md` exists, has `status: approved`, and contains all five required section headers before planning begins. Agent reads `tool-validate-spec/SKILL.md` for invocation contract.
+
+```shell
+python3 mise-en-place/tool-validate-spec/validate_spec.py
+```
+
+### spec-phase
+
+Structured deep-questioning workflow that guides a developer from an empty repo to an explicitly approved SPEC.md. Covers five Q&A categories, optional research sub-tasks, and an in-flow approval gate. Agent reads `spec-phase/SKILL.md` — no Python script (workflow skill only).
+
+Invoked via `/spec-phase` or by mentioning spec-phase in conversation.
+
 ## Usage
 
 Each tool has a `SKILL.md` that agents read, plus a Python script invoked via the Shell tool:
