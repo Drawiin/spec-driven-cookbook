@@ -97,7 +97,22 @@ Plans:
   2. The codebase map (stack, structure, conventions, existing capabilities) is loaded into the spec context so the Q&A does not re-ask what already exists
   3. The produced spec file explicitly separates "already built" (validated capabilities) from "to build" (active requirements), with no mixing between the two sections
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 03-01-PLAN.md — tool-detect-brownfield + validate_spec brownfield extensions (stdlib detection JSON + section gates + pytest)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 03-02-PLAN.md — map-codebase SKILL + spec-phase brownfield extension (detect → map → delta Q&A → Already Built / To Build SPEC)
+
+**Cross-cutting constraints:**
+
+- Python stdlib only (no pip installs)
+- All Phase 1–2 tests remain green
+- Greenfield spec-phase path unchanged when is_brownfield false
 
 ### Phase 4: Plan Phase
 
@@ -183,7 +198,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 |-------|----------------|--------|-----------|
 | 1. Tooling Foundation | 1/3 | In progress | - |
 | 2. Spec Phase — Greenfield | 2/2 | Complete    | 2026-05-22 |
-| 3. Brownfield Codebase Onboarding | 0/TBD | Not started | - |
+| 3. Brownfield Codebase Onboarding | 0/2 | Not started | - |
 | 4. Plan Phase | 0/TBD | Not started | - |
 | 5. Execute Phase — Thin Orchestrator | 0/TBD | Not started | - |
 | 6. Self-Healing Layer | 0/TBD | Not started | - |
