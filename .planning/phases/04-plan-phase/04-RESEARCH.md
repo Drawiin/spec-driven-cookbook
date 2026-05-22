@@ -454,22 +454,13 @@ def test_entry_gate_calls_validate_spec():
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **`requirements[]` frontmatter syntax**
-   - What we know: D-15 lists `requirements[]` as a field; validate_spec uses simple `key: value` lines.
-   - What's unclear: Whether multi-value requirements use YAML list syntax or comma-separated string.
-   - Recommendation: SKILL.md specifies inline YAML list (same as GSD plans); validate_plan checks `requirements` key exists but does not validate list contents in MVP.
+1. **`requirements[]` frontmatter syntax** — **RESOLVED:** SKILL.md specifies inline YAML list syntax (same as GSD execution plans). Example: `requirements:\n  - PLAN-01`. `validate_plan.py` checks `requirements` key exists in frontmatter but does not validate list contents in MVP (D-11 presence-only scope).
 
-2. **Phase slug derivation for artifact paths**
-   - What we know: Plans live at `.planning/phases/{slug}/`; spec is at `.planning/SPEC.md`.
-   - What's unclear: Whether plan-phase prompts user for slug or derives from SPEC title.
-   - Recommendation: Agent asks user to confirm phase slug on startup (or reuse existing phase directory if continuing); document in SKILL Step 1.
+2. **Phase slug derivation for artifact paths** — **RESOLVED:** Agent confirms phase slug with developer in Step 1 startup. Derive a suggested slug from SPEC title (kebab-case); if `.planning/phases/{slug}/` already exists, offer continue/rename. Set `PHASE_DIR = .planning/phases/{slug}/` before research or plan writes.
 
-3. **Plan-checker REVIEWS.md format**
-   - What we know: D-22 writes to `{phase}-REVIEWS.md`; GSD uses `## VERIFICATION PASSED` / `## ISSUES FOUND`.
-   - What's unclear: Exact markdown schema for cookbook.
-   - Recommendation: Adopt GSD markers for orchestrator parsing; planner discretion on section headings inside.
+3. **Plan-checker REVIEWS.md format** — **RESOLVED:** Adopt GSD markers `## VERIFICATION PASSED` or `## ISSUES FOUND` as the required terminal marker. Checker may include optional YAML `issues:` block with BLOCKER/WARNING entries. Orchestrator parses terminal marker only; section headings inside are planner discretion (D-22).
 
 ---
 

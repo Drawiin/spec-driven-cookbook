@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Tooling Foundation** - CLI utilities, context builders, and environment checks bundled inside the skill folder *(Complete — 2026-05-21)*
 - [x] **Phase 2: Spec Phase — Greenfield** - Structured deep-questioning flow, research sub-tasks, persisted spec file, and explicit approval gate on a clean context (completed 2026-05-22)
-- [ ] **Phase 3: Brownfield Codebase Onboarding** - Codebase mapping step that seeds the spec with what already exists vs. what is new
+- [x] **Phase 3: Brownfield Codebase Onboarding** - Codebase mapping step that seeds the spec with what already exists vs. what is new (completed 2026-05-22)
 - [ ] **Phase 4: Plan Phase** - Spec-to-plan decomposition: atomic tasks, parallel plan streams, and explicit approval before execution
 - [ ] **Phase 5: Execute Phase — Thin Orchestrator** - Thin orchestrator dispatches specialized workers in parallel waves; each worker receives only the context it needs; verification gates run at each execution boundary
 - [ ] **Phase 6: Self-Healing Layer** - Per-task verifier, corrective re-run on failure, plan-level spec reconciliation, and stuck-agent detection
@@ -128,7 +128,23 @@ Plans:
   4. The plan phase enforces an explicit approval gate — no execution command succeeds unless all plans have been approved
   5. The plan phase can run on a clean context — it reads only the spec file and local project files, with no dependency on prior session state
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 04-01-PLAN.md — tool-validate-plan TDD: validate_plan.py (todo + Verify + approval gate) + test_validate_plan.py + SKILL.md
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 04-02-PLAN.md — plan-phase/SKILL.md (entry gate, mandatory research, plan-checker loop, approve-all gate) + test_plan_phase_contract.py + README
+
+**Cross-cutting constraints:**
+
+- Python stdlib only (no pip installs)
+- Exit-code contract: validate_plan.py 0 = all plans approved with valid todos
+- End-user plans use todo markdown format (D-06) — NOT GSD XML task blocks
+- All Phase 1–3 tests remain green
 
 ### Phase 5: Execute Phase — Thin Orchestrator
 
@@ -198,8 +214,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 |-------|----------------|--------|-----------|
 | 1. Tooling Foundation | 1/3 | In progress | - |
 | 2. Spec Phase — Greenfield | 2/2 | Complete    | 2026-05-22 |
-| 3. Brownfield Codebase Onboarding | 0/2 | Not started | - |
-| 4. Plan Phase | 0/TBD | Not started | - |
+| 3. Brownfield Codebase Onboarding | 2/2 | Complete    | 2026-05-22 |
+| 4. Plan Phase | 0/2 | Not started | - |
 | 5. Execute Phase — Thin Orchestrator | 0/TBD | Not started | - |
 | 6. Self-Healing Layer | 0/TBD | Not started | - |
 | 7. Replication Engine — Project Analysis | 0/TBD | Not started | - |

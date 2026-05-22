@@ -56,8 +56,8 @@
 ### Greenfield & Brownfield Support
 
 - [x] **PROJ-01**: Framework works on empty repos — the spec phase can be the first thing run
-- [ ] **PROJ-02**: Framework works on existing codebases — a codebase mapping step runs before the spec phase if code exists
-- [ ] **PROJ-03**: Codebase map is used to seed the spec with what already exists (validated capabilities) vs. what is new (active requirements)
+- [x] **PROJ-02**: Framework works on existing codebases — a codebase mapping step runs before the spec phase if code exists
+- [x] **PROJ-03**: Codebase map is used to seed the spec with what already exists (validated capabilities) vs. what is new (active requirements)
 
 ## v2 Requirements
 
@@ -104,8 +104,8 @@
 | SPEC-04 | Phase 2 | Complete |
 | SPEC-05 | Phase 2 | Complete |
 | PROJ-01 | Phase 2 | Complete |
-| PROJ-02 | Phase 3 | Pending |
-| PROJ-03 | Phase 3 | Pending |
+| PROJ-02 | Phase 3 | Complete |
+| PROJ-03 | Phase 3 | Complete |
 | PLAN-01 | Phase 4 | Pending |
 | PLAN-02 | Phase 4 | Pending |
 | PLAN-03 | Phase 4 | Pending |

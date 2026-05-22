@@ -594,27 +594,31 @@ Keep the file concise — the spec author will read this before writing the fina
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Where does SPEC.md live?**
    - What we know: `.planning/` contains STATE.md, REQUIREMENTS.md, ROADMAP.md as first-class artifacts
    - What's unclear: Not locked in CONTEXT.md
    - Recommendation: `.planning/SPEC.md` — consistent with existing first-class artifacts; validate_spec.py searches this path first with `.` fallback
+   - **RESOLVED:** `.planning/SPEC.md` — consistent with other first-class artifacts in `.planning/`
 
 2. **Where do research files live?**
    - What we know: D-04 mentions `.planning/phases/02-spec-phase-greenfield/` — but this is the CURRENT project's phase dir, not a replicable path
    - What's unclear: Not locked in CONTEXT.md
    - Recommendation: `.planning/research/RESEARCH-<topic>.md` — generic, project-agnostic, clearly namespaced
+   - **RESOLVED:** `.planning/research/RESEARCH-<topic-slug>.md` — D-04's phase-specific path is non-portable when the skill is replicated (Pitfall 1); `.planning/research/` is the canonical, project-agnostic path
 
 3. **Does spec-phase detect an existing SPEC.md and offer resume?**
    - What we know: Not addressed in CONTEXT.md; PROJ-01 focuses on empty repos
    - What's unclear: UX when developer runs `/spec-phase` twice
    - Recommendation: Startup checks for existing SPEC.md; if found, presents status and offers: continue / restart / abort. Prevents silent overwrite.
+   - **RESOLVED:** Yes — Plan 02-02 Task 2 Step 1 implements startup detection: if `.planning/SPEC.md` exists, present current status and prompt continue/restart/abort before proceeding
 
 4. **Should validate_spec.py accept a `--spec` path argument?**
    - What we know: planning_scaffold.py uses `--root` for path override; consistent CLI pattern exists
    - What's unclear: Whether non-standard SPEC.md paths will ever occur
    - Recommendation: Add `--spec PATH` optional arg defaulting to `.planning/SPEC.md`. Low cost, high future flexibility.
+   - **RESOLVED:** Not implemented — `SPEC_CANDIDATES` list (`[".planning/SPEC.md", "SPEC.md"]`) provides equivalent coverage without adding CLI complexity. If path flexibility is needed in a future phase, `--spec` can be added then.
 
 ---
 
