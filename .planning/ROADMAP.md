@@ -102,11 +102,11 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 03-01-PLAN.md — tool-detect-brownfield + validate_spec brownfield extensions (detection JSON, section gates, bullet dedup SC3, scan_map_secrets fail-closed gate, symlink/DoS pytest)
+- [x] 03-01-PLAN.md — tool-detect-brownfield + validate_spec brownfield extensions (detection JSON, section gates, bullet dedup SC3, scan_map_secrets fail-closed gate, symlink/DoS pytest)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 03-02-PLAN.md — map-codebase SKILL + spec-phase brownfield extension (Step 1.4 detect → map → delta Q&A → Already Built / To Build SPEC) + SKILL contract tests
+- [x] 03-02-PLAN.md — map-codebase SKILL + spec-phase brownfield extension (Step 1.4 detect → map → delta Q&A → Already Built / To Build SPEC) + SKILL contract tests
 
 **Cross-cutting constraints:**
 
