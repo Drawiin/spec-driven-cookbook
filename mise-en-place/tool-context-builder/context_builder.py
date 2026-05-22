@@ -102,7 +102,7 @@ def preview_file(path: pathlib.Path, max_lines: int = 20) -> str:
     try:
         lines = path.read_text(encoding="utf-8").splitlines()[:max_lines]
         content = "\n".join(lines)
-        return f"### `{path.name}`\n```\n{content}\n```\n"
+        return f"### `{path.name}`\n~~~\n{content}\n~~~\n"
     except (UnicodeDecodeError, OSError):
         return f"### `{path.name}`\n_(binary or unreadable)_\n"
 
