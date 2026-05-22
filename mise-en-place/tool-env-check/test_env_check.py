@@ -23,15 +23,10 @@ def test_exits_zero_when_all_checks_pass():
     with patch("env_check.shutil.which", return_value="/usr/bin/git"), \
          patch("env_check.subprocess.run", return_value=mock_result), \
          patch.dict("os.environ", {}, clear=False):
-        # Remove CURSOR_TRACE_ID if present so cursor check uses subprocess path
-        env_backup = os.environ.pop("CURSOR_TRACE_ID", None)
-        try:
-            with pytest.raises(SystemExit) as exc_info:
-                main()
-            assert exc_info.value.code == 0
-        finally:
-            if env_backup is not None:
-                os.environ["CURSOR_TRACE_ID"] = env_backup
+        os.environ.pop("CURSOR_TRACE_ID", None)  # ensure cursor fast-path is inactive
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+        assert exc_info.value.code == 0
 
 
 def test_exits_one_when_git_missing():
