@@ -35,7 +35,10 @@ def read_artifact(planning_root: pathlib.Path, artifact: str) -> str:
     path = planning_root / artifact
     if not path.exists():
         raise FileNotFoundError(f"Artifact not found: {path}")
-    return path.read_text(encoding="utf-8")
+    try:
+        return path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        raise OSError(f"Cannot read artifact {path}: {exc}") from exc
 
 
 def write_artifact(planning_root: pathlib.Path, artifact: str, content: str) -> None:
@@ -117,7 +120,7 @@ def main() -> None:
         try:
             content = read_artifact(planning_root, args.artifact)
             print(content, end="")
-        except FileNotFoundError as exc:
+        except (FileNotFoundError, OSError) as exc:
             print(str(exc))
             sys.exit(1)
 
