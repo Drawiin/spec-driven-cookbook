@@ -50,10 +50,21 @@ def write_artifact(planning_root: pathlib.Path, artifact: str, content: str) -> 
 
 def format_file(path: pathlib.Path) -> None:
     """Normalize: strip trailing whitespace per line + ensure single trailing newline."""
-    text = path.read_text(encoding="utf-8")
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        print(f"ERROR: file is not valid UTF-8 (binary?): {path}")
+        sys.exit(1)
+    except OSError as exc:
+        print(f"ERROR: cannot read file: {exc}")
+        sys.exit(1)
     lines = [line.rstrip() for line in text.splitlines()]
     normalized = "\n".join(lines).rstrip("\n") + "\n"
-    path.write_text(normalized, encoding="utf-8")
+    try:
+        path.write_text(normalized, encoding="utf-8")
+    except OSError as exc:
+        print(f"ERROR: cannot write file: {exc}")
+        sys.exit(1)
 
 
 def _validate_root(raw_root: str) -> pathlib.Path:
