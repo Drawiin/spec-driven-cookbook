@@ -182,7 +182,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Tooling Foundation | 1/3 | In progress | - |
-| 2. Spec Phase — Greenfield | 2/2 | Complete   | 2026-05-22 |
+| 2. Spec Phase — Greenfield | 2/2 | Complete    | 2026-05-22 |
 | 3. Brownfield Codebase Onboarding | 0/TBD | Not started | - |
 | 4. Plan Phase | 0/TBD | Not started | - |
 | 5. Execute Phase — Thin Orchestrator | 0/TBD | Not started | - |

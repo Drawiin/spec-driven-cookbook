@@ -7,11 +7,11 @@
 
 ### Spec Phase
 
-- [ ] **SPEC-01**: User can initiate a spec phase that opens a structured deep-questioning flow
-- [ ] **SPEC-02**: The spec phase produces a persisted spec file capturing what to build, why, constraints, and success criteria
-- [ ] **SPEC-03**: Spec phase supports research sub-tasks (gathering domain knowledge before locking requirements)
-- [ ] **SPEC-04**: Spec file must be explicitly approved by the user before planning begins
-- [ ] **SPEC-05**: Spec phase works on a clean context — can be invoked with no prior session history, using only local files
+- [x] **SPEC-01**: User can initiate a spec phase that opens a structured deep-questioning flow
+- [x] **SPEC-02**: The spec phase produces a persisted spec file capturing what to build, why, constraints, and success criteria
+- [x] **SPEC-03**: Spec phase supports research sub-tasks (gathering domain knowledge before locking requirements)
+- [x] **SPEC-04**: Spec file must be explicitly approved by the user before planning begins
+- [x] **SPEC-05**: Spec phase works on a clean context — can be invoked with no prior session history, using only local files
 
 ### Plan Phase
 
@@ -55,7 +55,7 @@
 
 ### Greenfield & Brownfield Support
 
-- [ ] **PROJ-01**: Framework works on empty repos — the spec phase can be the first thing run
+- [x] **PROJ-01**: Framework works on empty repos — the spec phase can be the first thing run
 - [ ] **PROJ-02**: Framework works on existing codebases — a codebase mapping step runs before the spec phase if code exists
 - [ ] **PROJ-03**: Codebase map is used to seed the spec with what already exists (validated capabilities) vs. what is new (active requirements)
 
@@ -98,12 +98,12 @@
 | TOOL-02 | Phase 1 | Pending |
 | TOOL-04 | Phase 1 | Pending |
 | TOOL-05 | Phase 1 | Pending |
-| SPEC-01 | Phase 2 | Pending |
-| SPEC-02 | Phase 2 | Pending |
-| SPEC-03 | Phase 2 | Pending |
-| SPEC-04 | Phase 2 | Pending |
-| SPEC-05 | Phase 2 | Pending |
-| PROJ-01 | Phase 2 | Pending |
+| SPEC-01 | Phase 2 | Complete |
+| SPEC-02 | Phase 2 | Complete |
+| SPEC-03 | Phase 2 | Complete |
+| SPEC-04 | Phase 2 | Complete |
+| SPEC-05 | Phase 2 | Complete |
+| PROJ-01 | Phase 2 | Complete |
 | PROJ-02 | Phase 3 | Pending |
 | PROJ-03 | Phase 3 | Pending |
 | PLAN-01 | Phase 4 | Pending |
@@ -129,6 +129,7 @@
 | REPL-06 | Phase 8 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 33 total
 - Mapped to phases: 33 ✓
 - Unmapped: 0 ✓
