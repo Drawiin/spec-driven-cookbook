@@ -93,7 +93,7 @@ def main() -> None:
         "is_brownfield": has_code or has_package_file,
         "has_existing_code": has_code,
         "has_package_file": has_package_file,
-        "has_codebase_map": (root / ".planning" / "codebase").is_dir(),
+        "has_codebase_map": (root / ".planning" / "codebase" / "STACK.md").is_file(),
         "needs_codebase_map": (has_code or has_package_file) and not has_map,
         "code_extensions_found": sorted(extensions_found),
     }
@@ -305,7 +305,7 @@ Sub-agent prompt must include:
 
 **Analog:** `mise-en-place/spec-phase/SKILL.md` (self) + `gsd-map-codebase` check_existing flow
 
-**Existing Step 1 startup** (lines 36-63): keep unchanged; insert new **Step 0** before Step 1 (or between scaffold and Q&A per RESEARCH.md).
+**Existing Step 1 startup** (lines 36-63): keep unchanged; insert **Step 1.4: Brownfield Detection (runs after scaffold, before Step 2 Q&A)** at END of Step 1 (after scaffold + mkdir .planning/research).
 
 **Sub-agent spawning convention** (lines 24-27):
 
@@ -316,24 +316,25 @@ When the workflow needs to spawn a subagent:
 - Do NOT pass the `model` parameter — use the Cursor default model
 ```
 
-**Step 0 brownfield branch** (from RESEARCH.md — insert before Step 2 Q&A):
+**Step 1.4 brownfield branch** (from RESEARCH.md — runs on every Step 1 branch before Step 2 Q&A):
 
 ```markdown
-## Step 0: Brownfield Detection (before Q&A)
+## Step 1.4: Brownfield Detection (runs after scaffold, before Step 2 Q&A)
 
 1. Run detection:
    python3 mise-en-place/tool-detect-brownfield/detect_brownfield.py
 
-2. Parse JSON from stdout.
+2. Parse JSON from stdout — if invalid JSON, ERROR and STOP.
 
 3. If `is_brownfield` is false → continue to Step 2 (greenfield Q&A).
 
 4. If `is_brownfield` is true:
-   a. If `needs_codebase_map` is true → run map-codebase workflow (read map-codebase/SKILL.md)
-   b. If map exists → offer (1) Refresh (2) Skip (3) Update specific docs
-   c. Read `.planning/codebase/STACK.md`, `ARCHITECTURE.md`, `STRUCTURE.md`
-   d. Present 3–5 bullet summary of detected capabilities; ask user to confirm/correct
-   e. Continue to Step 2 with brownfield mode: do NOT re-ask stack/structure already in map
+   a. Set brownfield mode flag immediately
+   b. If `needs_codebase_map` is true → run map-codebase workflow (read map-codebase/SKILL.md)
+   c. If map exists → offer (1) Refresh (2) Skip (3) Update specific docs; warn if stale on Skip
+   d. Read one-line summaries from ALL seven `.planning/codebase/*.md` files
+   e. Present 3–5 bullet summary; require user confirm/correct before Q&A
+   f. Continue to Step 2 with brownfield mode: do NOT re-ask facts already in map
 ```
 
 **SPEC.md assembly extension** (lines 109-141 — extend frontmatter + body):
@@ -389,7 +390,13 @@ BROWNFIELD_SECTIONS = [
     "## To Build",
 ]
 
-    project_type = fm.get("project_type", "greenfield")
+    project_type = fm.get("project_type", "greenfield").strip().lower()
+
+    # Inverse rule: brownfield sections in body require project_type brownfield
+    if any(header in text for header in BROWNFIELD_SECTIONS) and project_type != "brownfield":
+        print("ERROR: SPEC.md contains brownfield sections but project_type is not brownfield", file=sys.stderr)
+        sys.exit(1)
+
     if project_type == "brownfield":
         for header in BROWNFIELD_SECTIONS:
             if header not in text:
@@ -548,7 +555,7 @@ Identical adapter block across all workflow and tool skills; only `name` and `de
 
 ### Workflow Sub-Agent Spawning
 **Source:** `mise-en-place/spec-phase/SKILL.md` lines 91-105
-**Apply to:** `map-codebase/SKILL.md`, `spec-phase/SKILL.md` Step 0
+**Apply to:** `map-codebase/SKILL.md`, `spec-phase/SKILL.md` Step 1.4
 
 ```markdown
 For each accepted research topic, use the **Task tool** to spawn a `generalPurpose` sub-agent. **Do NOT pass the `model` parameter** — use the Cursor default model.

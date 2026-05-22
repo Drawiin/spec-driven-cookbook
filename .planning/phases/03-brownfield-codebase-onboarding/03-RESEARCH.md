@@ -10,7 +10,7 @@ Phase 3 extends the Phase 2 greenfield `/spec-phase` workflow so a developer can
 
 The primary architectural split mirrors GSD and TLC: **deterministic detection and scaffolding** (Python) vs **semantic codebase analysis** (Cursor sub-agents writing to `.planning/codebase/`). `context_builder.py` already produces raw structural context (tree, deps, git, previews) but cannot infer architecture, conventions, or capabilities — that requires agent mappers, following the GSD `gsd-codebase-mapper` four-focus parallel pattern documented in [research/frameworks/gsd.md](../../research/frameworks/gsd.md) and implemented locally at `.cursor/get-shit-done/workflows/map-codebase.md`. [CITED: `.cursor/get-shit-done/bin/lib/init.cjs` brownfield detection logic]
 
-**Primary recommendation:** Add `tool-detect-brownfield` (stdlib Python exit-code/JSON contract), add `map-codebase/SKILL.md` (parallel mapper sub-agents → seven `.planning/codebase/*.md` files using GSD templates as format reference), extend `spec-phase/SKILL.md` with a Step 0 brownfield branch that runs detection → mapping → loads map into Q&A context, extend `validate_spec.py` to require `## Already Built` and `## To Build` when `project_type: brownfield`, and keep greenfield behavior unchanged when detection returns greenfield.
+**Primary recommendation:** Add `tool-detect-brownfield` (stdlib Python exit-code/JSON contract), add `map-codebase/SKILL.md` (parallel mapper sub-agents → seven `.planning/codebase/*.md` files using GSD templates as format reference), extend `spec-phase/SKILL.md` with **Step 1.4: Brownfield Detection (runs after scaffold, before Step 2 Q&A)** that runs detection → mapping → loads map into Q&A context on every Step 1 branch, extend `validate_spec.py` to require `## Already Built` and `## To Build` when `project_type: brownfield` (plus inverse rule when brownfield sections present without frontmatter), and keep greenfield behavior unchanged when detection returns greenfield.
 
 <user_constraints>
 ## User Constraints (from available sources)
@@ -48,7 +48,7 @@ The primary architectural split mirrors GSD and TLC: **deterministic detection a
 
 | ID | Description | Research Support |
 |----|-------------|------------------|
-| PROJ-02 | Framework works on existing codebases — a codebase mapping step runs before the spec phase if code exists | `tool-detect-brownfield` detection contract; `map-codebase/SKILL.md` mapper workflow; spec-phase Step 0 branch triggers map when `needs_codebase_map: true` |
+| PROJ-02 | Framework works on existing codebases — a codebase mapping step runs before the spec phase if code exists | `tool-detect-brownfield` detection contract; `map-codebase/SKILL.md` mapper workflow; spec-phase Step 1.4 branch triggers map when `needs_codebase_map: true` |
 | PROJ-03 | Codebase map is used to seed the spec with what already exists (validated capabilities) vs. what is new (active requirements) | Load `.planning/codebase/*.md` into Q&A context; SPEC.md sections `## Already Built` + `## To Build`; validate_spec enforcement; Q&A skips re-asking mapped facts |
 </phase_requirements>
 
@@ -172,7 +172,7 @@ mise-en-place/
 ├── map-codebase/
 │   └── SKILL.md                  # NEW — workflow skill (no Python)
 ├── spec-phase/
-│   └── SKILL.md                  # MODIFIED — Step 0 brownfield branch
+│   └── SKILL.md                  # MODIFIED — Step 1.4 brownfield branch
 ├── tool-validate-spec/
 │   ├── validate_spec.py          # MODIFIED — brownfield section checks
 │   └── test_validate_spec.py     # MODIFIED — brownfield cases
@@ -373,24 +373,28 @@ def find_code_files(root: pathlib.Path, depth: int = 0, max_depth: int = 3) -> b
     return False
 ```
 
-### spec-phase brownfield branch (SKILL.md insertion — Step 0)
+### spec-phase brownfield branch (SKILL.md insertion — Step 1.4)
 
 ```markdown
-## Step 0: Brownfield Detection (before Q&A)
+## Step 1.4: Brownfield Detection (runs after scaffold, before Step 2 Q&A)
+
+Runs at END of Step 1 on EVERY branch (Start fresh AND Continue with existing SPEC.md).
 
 1. Run detection:
    python3 mise-en-place/tool-detect-brownfield/detect_brownfield.py
 
-2. Parse JSON from stdout.
+2. Parse JSON from stdout — if invalid JSON, ERROR and STOP (do not proceed to Q&A).
 
 3. If `is_brownfield` is false → continue to Step 2 (greenfield Q&A).
 
 4. If `is_brownfield` is true:
-   a. If `needs_codebase_map` is true → run map-codebase workflow (read map-codebase/SKILL.md)
-   b. If map exists → offer (1) Refresh (2) Skip (3) Update specific docs
-   c. Read `.planning/codebase/STACK.md`, `ARCHITECTURE.md`, `STRUCTURE.md`
-   d. Present 3–5 bullet summary of detected capabilities; ask user to confirm/correct
-   e. Continue to Step 2 with brownfield mode: do NOT re-ask stack/structure already in map
+   a. Set brownfield mode flag immediately (not deferred to Step 4)
+   b. If `needs_codebase_map` is true → run map-codebase workflow (read map-codebase/SKILL.md)
+   c. If map exists → offer (1) Refresh (2) Skip (3) Update specific docs; warn if codebase_map_commit != HEAD on Skip
+   d. Require all 7 map files with >20 lines each — partial maps fail with retry prompt
+   e. Read one-line summaries from ALL seven `.planning/codebase/*.md` files
+   f. Present 3–5 bullet summary; require user confirm/correct before Q&A
+   g. Continue to Step 2 with brownfield mode: do NOT re-ask facts already in map
 ```
 
 ### validate_spec brownfield extension
@@ -522,7 +526,7 @@ def main() -> None:
 - [ ] `mise-en-place/tool-detect-brownfield/SKILL.md` — invocation contract
 - [ ] Extend `validate_spec.py` + `test_validate_spec.py` — brownfield section gates (PROJ-03)
 - [ ] `mise-en-place/map-codebase/SKILL.md` — mapper workflow (manual UAT for agent spawning)
-- [ ] Extend `spec-phase/SKILL.md` — Step 0 + brownfield Q&A + assembly rules
+- [ ] Extend `spec-phase/SKILL.md` — Step 1.4 + brownfield Q&A + assembly rules
 - [ ] Manual UAT script in phase VERIFICATION: run `/spec-phase` on this repo (brownfield) and confirm map + SPEC sections
 
 ## Security Domain
