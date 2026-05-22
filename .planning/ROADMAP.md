@@ -14,7 +14,7 @@ Build a meta-framework that takes a developer — solo, with Claude as the build
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Tooling Foundation** - CLI utilities, context builders, and environment checks bundled inside the skill folder *(Complete — 2026-05-21)*
-- [ ] **Phase 2: Spec Phase — Greenfield** - Structured deep-questioning flow, research sub-tasks, persisted spec file, and explicit approval gate on a clean context
+- [x] **Phase 2: Spec Phase — Greenfield** - Structured deep-questioning flow, research sub-tasks, persisted spec file, and explicit approval gate on a clean context (completed 2026-05-22)
 - [ ] **Phase 3: Brownfield Codebase Onboarding** - Codebase mapping step that seeds the spec with what already exists vs. what is new
 - [ ] **Phase 4: Plan Phase** - Spec-to-plan decomposition: atomic tasks, parallel plan streams, and explicit approval before execution
 - [ ] **Phase 5: Execute Phase — Thin Orchestrator** - Thin orchestrator dispatches specialized workers in parallel waves; each worker receives only the context it needs; verification gates run at each execution boundary
@@ -72,11 +72,11 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — tool-validate-spec Python gate: validate_spec.py (stdlib-only) + test_validate_spec.py (5 pytest functions, TDD RED→GREEN)
+- [x] 02-01-PLAN.md — tool-validate-spec Python gate: validate_spec.py (stdlib-only, status + REQUIRED_SECTIONS validation) + test_validate_spec.py (6 pytest functions, TDD RED→GREEN)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 02-02-PLAN.md — SKILL.md contracts: tool-validate-spec/SKILL.md (invocation contract) + spec-phase/SKILL.md (full workflow: startup, Q&A, research, assembly, approval gate)
+- [x] 02-02-PLAN.md — SKILL.md contracts + README: tool-validate-spec/SKILL.md, spec-phase/SKILL.md (startup, Q&A, research, assembly, approval gate), mise-en-place/README.md
 
 **Cross-cutting constraints:**
 
@@ -182,7 +182,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Tooling Foundation | 1/3 | In progress | - |
-| 2. Spec Phase — Greenfield | 0/TBD | Not started | - |
+| 2. Spec Phase — Greenfield | 2/2 | Complete   | 2026-05-22 |
 | 3. Brownfield Codebase Onboarding | 0/TBD | Not started | - |
 | 4. Plan Phase | 0/TBD | Not started | - |
 | 5. Execute Phase — Thin Orchestrator | 0/TBD | Not started | - |
