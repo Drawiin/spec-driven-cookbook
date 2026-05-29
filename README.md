@@ -6,6 +6,18 @@
 
 This project explores specification-driven patterns for designing, orchestrating, and scaling AI agents. It's about building applications with quality and scalability that are sustainable in the long run. More importantly, it's about building the applications that build these applications—tools that help developers work faster without sacrificing quality, allowing them to apply their experience and human judgment where it truly matters.
 
+# Current status
+
+This repository is currently a **research & knowledge base**, not a shipping framework.
+
+The first prototype ("mise-en-place") validated several patterns but accumulated too much surface for what it actually delivered. It has been **archived as source material** under [`research/prototype/`](research/prototype/) — see [`research/prototype/LEARNINGS.md`](research/prototype/LEARNINGS.md) for what it got right and what to avoid. A new, deliberately **simpler** workflow will be designed from this base; its shape is intentionally left open for now.
+
+- **Knowledge base:** [`research/`](research/) — framework studies, cross-cutting analyses, and incorporated external sources. Start at [`research/README.md`](research/README.md).
+- **Archived v1 prototype:** [`research/prototype/`](research/prototype/) — the implementation and its full build journey.
+- **Queryable index:** the research tree is indexed with [Graphify](https://github.com/safishamsi/graphify) into [`graphify-out/`](graphify-out/) (`GRAPH_REPORT.md`, `graph.json`, `graph.html`).
+
+The philosophy below remains the guiding direction for whatever gets built next.
+
 # Core philosophy
 
 - **Orchestrators + specialized workers**
@@ -46,4 +58,5 @@ Examples:
 
 # References
  - [GSD (Get Shit Done)](https://github.com/gsd-build/get-shit-done): Soft meta-framework, agnostic but text-heavy; our V1 inspiration
- - [GSD-2](https://github.com/gsd-build/gsd-2): Follow-up focused on building specialized agents with the Agents SDK
+ - GSD-2 / GSD Pi: provider-agnostic follow-up to GSD — see [`research/follow-up/A-gsd2.md`](research/follow-up/A-gsd2.md) for notes
+ - Full framework dossier and source list: [`research/SUMMARY.md`](research/SUMMARY.md) and [`research/SOURCES.md`](research/SOURCES.md)
