@@ -7,7 +7,9 @@
 
 ## 1. About This Dossier
 
-This dossier documents a research sweep of seven spec-driven AI coding frameworks conducted in May 2026 to inform the design of a new framework being built by this team. It contains four framework deep dives (GSD, TLC Spec-Driven, Graphify, and four adjacent frameworks in one file), seven cross-cutting topic analyses, and this hub. To get design inputs fast, start with [`topics/patterns-worth-stealing.md`](topics/patterns-worth-stealing.md), which ranks nineteen transferable patterns by transferability. For depth on any framework, follow the links in Section 5. One source — a Cursor login/OAuth challenge URL — was auth-gated and could not be fetched; its contents are excluded from the dossier.
+This dossier documents a research sweep of seven spec-driven AI coding frameworks conducted in May 2026 to inform the design of a new framework being built by this team. It contains four framework deep dives (GSD, TLC Spec-Driven, Graphify, and four adjacent frameworks in one file), seven cross-cutting topic analyses, and this hub. To get design inputs fast, start with [`topics/patterns-worth-stealing.md`](topics/patterns-worth-stealing.md), which ranks thirty-two transferable patterns by transferability (the original nineteen plus thirteen added on 2026-05-24 from external sources — see §9 Incorporation Log). For depth on any framework, follow the links in Section 5. One source — a Cursor login/OAuth challenge URL — was auth-gated and could not be fetched; its contents are excluded from the dossier.
+
+A useful framing introduced by the 2026-05-24 incorporation pass: the dossier's verification mechanisms can be read collectively as an *outer harness* around the agent. The Harness Engineering article ([https://martinfowler.com/articles/harness-engineering.html](https://martinfowler.com/articles/harness-engineering.html)) describes this harness cybernetically as a "governor" subject to **Ashby's Law of Requisite Variety** — the harness must have at least as much regulatory variety as the agent has behavioural variety. A practical diagnostic: when a phase fails repeatedly despite added controls, the harness probably lacks variety; narrow the scope or add a control of a different *kind* (a new sensor type, not another instance of the same).
 
 ---
 
@@ -43,7 +45,9 @@ This dossier documents a research sweep of seven spec-driven AI coding framework
 
 ## 4. Top 10 Patterns Worth Stealing
 
-Patterns are drawn from [`topics/patterns-worth-stealing.md`](topics/patterns-worth-stealing.md). Each is rated HIGH transferability in that file. The entry for each pattern here gives the problem solved and what to adapt; for full mechanism detail, origin, and adaptation guidance, follow the link. The full file contains nineteen patterns ranked across four groups; only the top ten by transferability are featured here.
+Patterns are drawn from [`topics/patterns-worth-stealing.md`](topics/patterns-worth-stealing.md). Each is rated HIGH transferability in that file. The entry for each pattern here gives the problem solved and what to adapt; for full mechanism detail, origin, and adaptation guidance, follow the link. The full file contains thirty-two patterns ranked across four groups (nineteen from the original 2026-05-19 sweep plus thirteen added on 2026-05-24 from external sources — see §9 Incorporation Log); only the top ten by transferability are featured here.
+
+The 2026-05-24 incorporation pass also introduces an *outer harness* framing for these patterns: many of them can be read as either **guides** (feedforward — constitutions, AGENTS.md, the sub-agent context contract = Patterns 6 and 16) or **sensors** (feedback — decision coverage gate = Pattern 10, package legitimacy gate = Pattern 14, test-as-spec markers = Pattern 11, plan-checker, gsd-verifier). The unifying mental model is from Martin Fowler's *Harness Engineering* ([https://martinfowler.com/articles/harness-engineering.html](https://martinfowler.com/articles/harness-engineering.html)). See Patterns 29 and 30 for the explicit taxonomy.
 
 ### Group A: Context and Memory Management
 
@@ -163,6 +167,26 @@ Nine patterns not featured above are covered in [`topics/patterns-worth-stealing
 - **Conditional Skill Delegation with One-Shot Nudges** (HIGH) — probe-or-fallback for optional peer skills with a hard "recommend install at most once per session" rule; from TLC.
 - **Post-Commit Rebuild Hook for Shared Artifacts** (MEDIUM) — a post-commit hook automatically rebuilds the canonical artifact file after every commit; from Graphify. `[note: the cache described this as a union-merge driver but the live README describes a post-commit rebuild hook — see graphify.md for correction]`
 
+### Patterns Added 2026-05-24 from External Sources
+
+Thirteen patterns were added from OpenRewrite, ArchUnit, Martin Fowler's "Harness Engineering," and Birgitta Böckeler's "Role of Developer Skills" memo. Full entries in [`topics/patterns-worth-stealing.md`](topics/patterns-worth-stealing.md); brief tag lines below.
+
+- **Pattern 20: Lossless Semantic Tree (LST) Substrate** (HIGH where IR investment is justified) — propose AI edits against a typed, format-preserving IR rather than text; type info gives grounding, whitespace is tree-resident; from OpenRewrite.
+- **Pattern 21: Authored Composition of Typed Transformations (Recipe DAG)** (HIGH) — `recipeList` lets deterministic and LLM skills compose uniformly in a YAML DAG; planner does tool-selection over the DAG; from OpenRewrite.
+- **Pattern 22: Precondition Scope Filter** (HIGH) — every AI skill ships a deterministic precondition (glob/AST query/type predicate) that gates which files it may touch *before* the LLM is invoked; from OpenRewrite.
+- **Pattern 23: Isomorphic vs Non-Isomorphic Edits (Tiered Review Gating)** (HIGH) — classify edits as safe (rename/retype/format) vs structural (replace function/change interface) and apply different review gates per class; from OpenRewrite.
+- **Pattern 24: Self-Describing Skill Manifest with Estimated Effort** (HIGH) — every skill publishes parameters, tags, and an `estimatedEffortPerOccurrence` field that the planner selects on; from OpenRewrite.
+- **Pattern 25: Frozen Baseline with Ratchet Semantics** (HIGH) — snapshot existing violations into a VCS-committed store; CI fails only on *new* violations, auto-shrinks when fixed; from ArchUnit.
+- **Pattern 26: Diagram-as-Executable-Spec** (MEDIUM-HIGH) — a PlantUML/Mermaid component diagram is both human-readable architecture and an executable rule; any code edge not in the diagram fails the build; from ArchUnit.
+- **Pattern 27: Importable Spec Packs** (MEDIUM-HIGH; companion to Pattern 15) — org-wide constraint packs become installable dependencies on top of the framework; from ArchUnit.
+- **Pattern 28: Named Architectural Primitives Vocabulary** (MEDIUM-HIGH) — ship a curated catalog of named architectures (layered/onion/hexagonal/slices) as parameterized spec primitives instead of free-form architectural prose; from ArchUnit.
+- **Pattern 29: Guides + Sensors Taxonomy** (HIGH) — every control is a guide (feedforward), a sensor (feedback), or both; spec items without paired sensors are unverifiable by construction; from Harness Engineering.
+- **Pattern 30: Computational vs Inferential Control Labelling** (HIGH) — each control carries a second axis label (deterministic vs LLM-based) that drives lifecycle placement (pre-commit vs phase gate); from Harness Engineering.
+- **Pattern 31: Approved Scenarios for AI-Generated Behaviour Tests** (HIGH for workflow/prompt phases) — fixtures combine input + expected output; runner regenerates expected, reviewer does diff review; complements Pattern 11; from Lex Lerumph via Harness Engineering.
+- **Pattern 32: Reuse-Awareness Pre-Check** (HIGH for brownfield) — before generating new components, query a codebase index for semantically close existing symbols and surface a "candidate-for-reuse" list the executor must address; from Böckeler Memo #13 (mechanism via Graphify).
+
+Several existing patterns received Extension sub-bullets (visible inline in [`topics/patterns-worth-stealing.md`](topics/patterns-worth-stealing.md)): Pattern 4 (team-level "go-wrong" log), Pattern 5 (vertical-slice constraint), Pattern 6 (per-hunk attribution from `Result.recipesThatMadeChanges`), Pattern 8 (universal diagnose-before-fix + OpenRewrite `causesAnotherCycle` cycles), Pattern 11 (architecture-rule tests + self-describing rules + AI-test redundancy axis + per-hunk attribution), Pattern 13 (OpenRewrite Markers + ArchUnit bytecode substrate), Pattern 15 (versioned packaged distribution + harness templates per service topology), Pattern 16 (versioned with provenance back to friction telemetry).
+
 ---
 
 ## 5. Dossier Index (Backlinks)
@@ -191,7 +215,7 @@ Nine patterns not featured above are covered in [`topics/patterns-worth-stealing
 
 - [topics/multi-runtime-support.md](topics/multi-runtime-support.md) — How GSD handles 15-runtime install-time content transformation (tool name mapping for Bash/Read/etc., hook event renaming PostToolUse↔AfterTool, agent frontmatter conversion per runtime, hyphen-to-colon command spelling rewrite for Gemini, Installer Migration Module ADR-0008 for version upgrades); how Graphify handles per-platform installation with layered PreToolUse hooks and instruction-file fallback strategies for 17+ assistants [unverified]; and how Spec Kit (30+ agents, slash commands or skills mode toggle), OpenSpec (25+ tools), and Task Master (MCP server across five IDE environments) achieve broad agent support.
 
-- [topics/patterns-worth-stealing.md](topics/patterns-worth-stealing.md) — Nineteen transferable design patterns ranked by transferability (HIGH / MEDIUM-HIGH / MEDIUM), grouped into four categories: Context and Memory Management (Patterns 1–4: compound init, two-stage namespace routing, per-file token budgets, ID-based persistent memory), Workflow and Orchestration (Patterns 5–9: auto-sized pipeline, sub-agent context contract, wave-based parallelism, diagnose-into-plan self-healing, three-role model config), Verification and Quality (Patterns 10–14: asymmetric decision gates, test-as-spec, parallel-safety as test property, confidence tagging, package legitimacy gate), and Extensibility and Adaptability (Patterns 15–19: install-time profile + surface toggle, constitution as governance artifact, current-vs-proposed spec separation, conditional delegation with one-shot nudge, git merge driver for shared artifacts). Each entry includes origin framework, mechanism, transferability rating, what to adapt, and cross-links to supporting topic files.
+- [topics/patterns-worth-stealing.md](topics/patterns-worth-stealing.md) — Thirty-two transferable design patterns ranked by transferability (HIGH / MEDIUM-HIGH / MEDIUM), grouped into four categories: Context and Memory Management (Patterns 1–4: compound init, two-stage namespace routing, per-file token budgets, ID-based persistent memory), Workflow and Orchestration (Patterns 5–9 plus Pattern 21: auto-sized pipeline, sub-agent context contract, wave-based parallelism, diagnose-into-plan self-healing, three-role model config, authored composition of typed transformations), Verification and Quality (Patterns 10–14 plus 20, 22, 23, 25, 29, 30, 31, 32: asymmetric decision gates, test-as-spec, parallel-safety as test property, confidence tagging, package legitimacy gate, LST substrate, precondition scope filter, isomorphic/non-isomorphic edit gating, frozen baseline with ratchet semantics, guides+sensors taxonomy, computational/inferential labelling, approved scenarios, reuse-awareness pre-check), and Extensibility and Adaptability (Patterns 15–19 plus 24, 26, 27, 28: install-time profile + surface toggle, constitution as governance artifact, current-vs-proposed spec separation, conditional delegation with one-shot nudge, git merge driver for shared artifacts, self-describing skill manifest, diagram-as-executable-spec, importable spec packs, named architectural primitives). Each entry includes origin framework, mechanism, transferability rating, what to adapt, and cross-links to supporting topic files.
 
 ---
 
@@ -245,6 +269,15 @@ Sources are grouped by framework and limited to URLs that were actually fetched 
 - `https://github.com/bmad-code-org/BMAD-METHOD` (repo metadata)
 - `https://raw.githubusercontent.com/bmad-code-org/BMAD-METHOD/main/README.md` (project README)
 
+**External Sources (added 2026-05-24 — see §9 Incorporation Log)**
+
+- `https://docs.openrewrite.org/` (OpenRewrite docs hub; fetched recipes, visitors, LSTs, preconditions, YAML format reference, getting-started) — source for Patterns 20, 21, 22, 23, 24 and Extensions to Patterns 6, 8, 11, 13, 15.
+- `https://www.archunit.org/` (ArchUnit landing + user guide §7, §8.1–8.6) — source for Patterns 25, 26, 27, 28 and Extensions to Patterns 11, 13.
+- `https://martinfowler.com/articles/harness-engineering.html` (Martin Fowler / Birgitta Böckeler [inference], 2026-04 — "Harness Engineering") — source for Patterns 29, 30, 31 and implications added to `topics/self-healing-and-verification.md` §8 and `topics/workflow-and-orchestration.md` §8, plus the cybernetic/Ashby framing in §1 above.
+- `https://martinfowler.com/articles/exploring-gen-ai/13-role-of-developer-skills.html` (Birgitta Böckeler memo #13 in *Exploring Gen AI*) — source for Pattern 32 and Extensions to Patterns 4, 5, 8, 11, 16, plus the impact-radius and DX-guardrails sections in `topics/self-healing-and-verification.md` §8 and §9.
+
+Detail per source lives in `research/external-sources/summaries/` (one summary per URL) and `research/external-sources/reviews/` (one alignment review per source vs the dossier).
+
 ---
 
 ## 7. Open Questions and Unverified Items
@@ -265,8 +298,44 @@ Sources are grouped by framework and limited to URLs that were actually fetched 
 - The `continue-here.md` artifact is described as the single context handoff file written by `/gsd-pause-work`; whether it overwrites or appends to a prior session's handoff is not confirmed in public documentation.
 - Graphify's claim of approximately 71.5× token reduction versus naive RAG: this figure appears in Graphify's marketing materials and is listed as unverified in the detail file; no independent validation of the measurement methodology was performed.
 
+- **Open question (added 2026-05-24): harnessability as a stack-evaluation criterion.** The Harness Engineering article ([https://martinfowler.com/articles/harness-engineering.html](https://martinfowler.com/articles/harness-engineering.html)) argues that typed languages, clear module boundaries, and opinionated frameworks materially improve how well an outer harness can exist on top of them. The dossier does not currently evaluate frameworks (or their target codebases) on this axis. For a new framework, an explicit harnessability heuristic — "does this stack admit cheap, deterministic guides and sensors at the boundaries that matter?" — belongs alongside cost and DX in tech-selection guidance. Cited example: OpenAI Codex layered architecture (referenced in the Harness Engineering article).
+
+- **Open question (added 2026-05-24): no "code-coverage equivalent" for harness quality.** The Harness Engineering article flags this as an unresolved problem. Possible directions for a new framework: percentage of REQ-IDs with paired sensors; percentage of D-IDs with paired remediation prompts; ratio of guides-without-sensors to total guides (see Pattern 29).
+
 ---
 
 ## 8. Note on Excluded Source
 
 The URL `cursor.com/loginDeepControl?…` provided as a research source was a Cursor OAuth challenge URL requiring an active authenticated browser session; it was not accessible and its contents are excluded from this dossier.
+
+---
+
+## 9. Incorporation Log — 2026-05-24
+
+On 2026-05-24 the dossier was extended with material from `SOURCES.md` (four external URLs unrelated to the seven frameworks originally surveyed). The extension was produced by a four-stage subagent pipeline: (1) one fetcher per URL produced a structured summary in `research/external-sources/summaries/`; (2) one reviewer per summary classified each finding as ALIGNS / EXTENDS / NEW / CONTRADICTS / OUT-OF-SCOPE against the existing dossier, with ready-to-paste text for NEW and EXTENDS items, in `research/external-sources/reviews/`; (3) an incorporator agent and a follow-up direct pass applied the proposals to dossier files; (4) evaluator agents review the result and auto-fix issues.
+
+| Source | New patterns added | EXTENDS applied (existing patterns + sections) | Files touched |
+|---|---|---|---|
+| OpenRewrite ([docs.openrewrite.org](https://docs.openrewrite.org/)) | Pattern 20 (LST substrate), Pattern 21 (Recipe DAG), Pattern 22 (precondition scope filter), Pattern 23 (isomorphic vs non-isomorphic edits), Pattern 24 (self-describing skill manifest) | Pattern 6 (per-hunk attribution), Pattern 8 (`causesAnotherCycle` cycles), Pattern 11 (per-hunk attribution), Pattern 13 (Markers on AST nodes), Pattern 15 (versioned packaged distribution); plus survey-then-edit typed-accumulator implication in `self-healing-and-verification.md` §8 | `topics/patterns-worth-stealing.md`, `topics/self-healing-and-verification.md`, `SUMMARY.md` |
+| ArchUnit ([archunit.org](https://www.archunit.org/)) | Pattern 25 (frozen baseline with ratchet semantics), Pattern 26 (diagram-as-executable-spec), Pattern 27 (importable spec packs), Pattern 28 (named architectural primitives vocabulary) | Pattern 11 (generalizes to architecture-rule tests + self-describing rules), Pattern 13 (bytecode as deterministic substrate); plus frozen-baselines section in `self-healing-and-verification.md` §10 | `topics/patterns-worth-stealing.md`, `topics/self-healing-and-verification.md`, `SUMMARY.md` |
+| Harness Engineering ([Fowler/Böckeler](https://martinfowler.com/articles/harness-engineering.html) [inference]) | Pattern 29 (guides + sensors taxonomy), Pattern 30 (computational vs inferential), Pattern 31 (approved scenarios) | Pattern 15 (harness templates per service topology); plus regulation-categories, sensor-remediation, quality-left-distribution, and steering-loop/harness-update implications in `self-healing-and-verification.md` §8 and `workflow-and-orchestration.md` §8; plus cybernetic/Ashby framing in `SUMMARY.md` §1 and two open questions in §7 (harnessability, harness coverage) | `topics/patterns-worth-stealing.md`, `topics/self-healing-and-verification.md`, `topics/workflow-and-orchestration.md`, `SUMMARY.md` |
+| Role of Developer Skills ([Böckeler memo #13](https://martinfowler.com/articles/exploring-gen-ai/13-role-of-developer-skills.html)) | Pattern 32 (reuse-awareness pre-check) | Pattern 4 (team-level "go-wrong" log), Pattern 5 (vertical-slice as constructive constraint), Pattern 8 (universal diagnose-before-fix), Pattern 11 (test redundancy axis + AI-tuned duplication weight), Pattern 16 (constitution versioned with friction-case provenance); plus impact-radius classification, shift-left review, prompt-fidelity-decay note in `self-healing-and-verification.md` §8 and new §9 Ergonomic Gates; plus steering-as-unit-of-work implication in `workflow-and-orchestration.md` §8 | `topics/patterns-worth-stealing.md`, `topics/self-healing-and-verification.md`, `topics/workflow-and-orchestration.md`, `SUMMARY.md` |
+
+**Items skipped (with rationale)** — see per-source review files for full lists:
+
+- OpenRewrite: Styles (derivative of LST; no transfer without IR), recipe immutability + visitor-local mutable state (Java visitor authoring discipline), Maven/Gradle plugin shape (already covered by Pattern 1), `mvn rewrite:discover` (already covered by `/gsd-help` analogs), Moderne (too lightly sourced).
+- ArchUnit: `@AppModule` JPMS-like modularization, `GeneralCodingRules` catalog (Java-specific lint), `ImportOption` filters, `ClassFileImporter` API surface (implementation detail).
+- Harness Engineering: verbatim OpenAI Codex anecdote (cited under N6 only), full cybernetic governor deep dive (kept as single-paragraph framing in §1), behaviour-harness standalone topic file (premature — flagged in §8 and §7 only), replacement of pre/during/post-code timing axis with guides/sensors axis (kept as orthogonal layer).
+- Role of Developer Skills: "AI will not write 90% of code autonomously in a year" (industry forecast), personal-skill list itself (out of scope as patterns), culture / psychological safety (out of scope for engineering-systems dossier), specific anecdotes (Docker arch, JSON-display web component — pattern abstractions cover the ground).
+
+**Contradictions logged but not auto-applied:** None across the four sources.
+
+**Risks / known issues with the incorporation:**
+
+- Pattern numbering: the original dossier ended at Pattern 19. New patterns are 20–32, sequentially in file order. The Pattern Ranking Summary Table was extended to cover all 32.
+- Two reviews (OpenRewrite, Developer Skills) flagged MEDIUM reviewer confidence because the framework deep-dive files (`frameworks/*.md`) were not re-read during review; a small number of EXTENDS items may already be covered there at a depth not surfaced in the topic files. Recommended: a follow-up audit cross-checks the new EXTENDS entries against the framework deep-dives.
+- TLC RED-test immutability (Pattern 11) and Approved Scenarios (Pattern 31) are not contradictory but apply to different test types (hand-authored contract tests vs AI-generated fixture tests). The dossier should be explicit about this scoping; the current Pattern 31 entry notes "complements Pattern 11" but a reader following only Pattern 11 may not see the qualification. Flagged for evaluator pass.
+- The Harness Engineering article is attributed in the dossier text as "Martin Fowler / Birgitta Böckeler [inference]" — author attribution was inferred from the *Exploring Gen AI* series authorship, not stated verbatim on the article page. The `[inference]` tag is preserved everywhere the attribution appears.
+- `cursor.com/loginDeepControl?…` from the original research and the four new external URLs from `SOURCES.md` are independent corpora; no cross-references were attempted between them.
+
+See `research/external-sources/summaries/` and `research/external-sources/reviews/` for the per-source material and rationale, and `research/external-sources/INCORPORATION-REPORT.md` for the operational record of which edits were applied directly vs by subagent.
