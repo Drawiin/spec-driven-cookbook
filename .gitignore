@@ -1,0 +1,15 @@
+# Graphify local venv (recreate with: uv venv --python 3.12 .graphify-venv && uv pip install --python .graphify-venv graphifyy)
+.graphify-venv/
+
+# Graphify machine-specific / regenerable artifacts (commit the rest of graphify-out/)
+graphify-out/manifest.json
+graphify-out/cost.json
+graphify-out/cache/
+
+# Graphify pipeline temp files
+.graphify_*
+
+# Python
+.pytest_cache/
+__pycache__/
+*.pyc

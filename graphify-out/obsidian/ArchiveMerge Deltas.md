@@ -1,0 +1,17 @@
+---
+source_file: "research/.research-cache/03-adjacent-findings.md"
+type: "document"
+community: "OpenSpec Current-vs-Proposed"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/OpenSpec_Current-vs-Proposed
+---
+
+# Archive/Merge Deltas
+
+## Connections
+- [[Current-vs-Proposed Separation]] - `references` [EXTRACTED]
+- [[OpenSpec_1]] - `part_of` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/OpenSpec_Current-vs-Proposed
